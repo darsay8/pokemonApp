@@ -1,8 +1,11 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {styles} from '../theme/theme';
+import usePokemonPaginated from '../hooks/usePokemonPaginated';
 
 const HomeScreen = () => {
+  const {simplePokemonsList, isLoading} = usePokemonPaginated();
+
   return (
     <View style={styles.container}>
       <Image source={require('../assets/pokeball.png')} style={styles.imgBg} />
