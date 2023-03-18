@@ -1,30 +1,45 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {styles} from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import FadeInImage from '../components/FadeInImage';
+import usePokemon from '../hooks/usePokemon';
+import {FullWindowOverlay} from 'react-native-screens';
+import {Dimensions} from 'react-native';
+import PokemonDetails from '../components/PokemonDetails';
+import {PokemonFull} from '../interfaces/IPokemon';
 
 interface Props extends StackScreenProps<RootStackParams, 'Pokemon'> {}
 
 const PokemonScreen = ({navigation, route}: Props) => {
   const {simplePokemon, color} = route.params;
-
   const {top} = useSafeAreaInsets();
-  const {name, picture} = simplePokemon;
+  const {id, name, picture} = simplePokemon;
+  const {isLoading, pokemon} = usePokemon(id);
 
   return (
     <View style={styles.container}>
       <View
         style={{
+          position: 'absolute',
+          width: Dimensions.get('window').width,
           height: 370,
           backgroundColor: color,
-          // zIndex: 999,
+          zIndex: 999,
           borderBottomRightRadius: 500,
           borderBottomLeftRadius: 500,
         }}>
         <View style={styles.row}>
+          {/* header content */}
           <View
             style={{
               ...styles.header,
@@ -56,6 +71,21 @@ const PokemonScreen = ({navigation, route}: Props) => {
               style={{width: 250, height: 250, position: 'absolute', top: -180}}
             />
           </View>
+        </View>
+      </View>
+
+      <View style={styles.row}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {isLoading ? (
+            <ActivityIndicator size={20} />
+          ) : (
+            <PokemonDetails pokemon={pokemon as PokemonFull} />
+          )}
         </View>
       </View>
     </View>
