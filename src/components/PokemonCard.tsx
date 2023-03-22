@@ -49,8 +49,8 @@ const PokemonCard = ({pokemon}: Props) => {
           backgroundColor: bgColor,
         }}>
         <View>
-          <Text>
-            {pokemon.name}
+          <Text style={{color: 'white', fontWeight: '600', left: 10, top: 10}}>
+            {pokemon.name.toUpperCase()}
             {'\n#' + pokemon.id}
           </Text>
         </View>

@@ -54,8 +54,9 @@ const PokemonScreen = ({navigation, route}: Props) => {
               }>
               <Icon name="arrow-back-outline" color="white" size={30} />
             </TouchableOpacity>
-            <Text style={{...styles.title, color: 'white'}}>
-              {simplePokemon.name}
+            <Text
+              style={{...styles.title, color: 'white', textAlign: 'center'}}>
+              {simplePokemon.name.toUpperCase()}
             </Text>
             <Image
               source={require('../assets/pokeball-white.png')}
