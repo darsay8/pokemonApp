@@ -17,11 +17,16 @@ const SearchScreen = () => {
       return setPokemonFiltered([]);
     }
 
-    setPokemonFiltered(
-      simplePokemonsList.filter(poke =>
-        poke.name.toLocaleLowerCase().includes(term.toLocaleLowerCase()),
-      ),
-    );
+    if (isNaN(Number(term))) {
+      setPokemonFiltered(
+        simplePokemonsList.filter(poke =>
+          poke.name.toLocaleLowerCase().includes(term.toLocaleLowerCase()),
+        ),
+      );
+    } else {
+      const pokemonById = simplePokemonsList.find(poke => poke.id === term);
+      setPokemonFiltered(pokemonById ? [pokemonById] : []);
+    }
   }, [term]);
 
   if (isFetching) {
